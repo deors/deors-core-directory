@@ -1,5 +1,5 @@
 /**
- * Directory library is high-level API to interact with LDAP-compliant
- * directory services.
+ * core-directory is a high-level API for managing connections
+ * to LDAP-based directory services.
  */
 package deors.core.directory;
