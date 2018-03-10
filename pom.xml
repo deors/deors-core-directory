@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
 
     <name>deors-core-directory</name>
-    <description>deors' core directory (LDAP) library</description>
+    <description>core-directory is a high-level API for managing connections to LDAP-based directory services</description>
 
     <properties>
         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
