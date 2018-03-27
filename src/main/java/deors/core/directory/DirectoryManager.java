@@ -44,7 +44,7 @@ public class DirectoryManager {
     /**
      * The finalizer guardian.
      */
-    final Object finalizerGuardian = new Object() {
+    protected final Object finalizerGuardian = new Object() {
 
         /**
          * Finalizes the object by closing the current connection if it is opened.
