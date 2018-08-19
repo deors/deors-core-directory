@@ -170,7 +170,7 @@ public class DirectoryManager {
     private LDAPAttribute getAttribute(String objectDN, String attributeName)
         throws DirectoryException {
 
-        try {
+            try {
             LDAPSearchResults res = connection.search(
                 objectDN, LDAPConnection.SCOPE_BASE,
                 DirectoryContext.BLANK, new String[] {attributeName}, false);
@@ -184,14 +184,14 @@ public class DirectoryManager {
             if (res.hasMore()) {
                 nextEntry = res.next();
                 attributeSet = nextEntry.getAttributeSet();
-                if (attributeSet.size() != 1) {
+                if (attributeSet.size() == 0) {
                     return null;
                 }
 
                 allAttributes = attributeSet.iterator();
                 if (allAttributes.hasNext()) {
                     attribute = (LDAPAttribute) allAttributes.next();
-                    if (attribute.size() != 1) {
+                    if (attribute.size() == 0) {
                         return null;
                     }
 
