@@ -22,7 +22,7 @@
 
         <novell-ldap.version>2009-10-07</novell-ldap.version>
 
-        <logback.version>1.4.11</logback.version>
+        <logback.version>1.4.12</logback.version>
 
         <junit.version>5.10.0</junit.version>
         <jmockit.version>1.45</jmockit.version>
