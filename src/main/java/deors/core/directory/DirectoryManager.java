@@ -90,6 +90,7 @@ public class DirectoryManager implements AutoCloseable {
 
     /**
      * Closes the current directory connection when one is active.
+     * Calling this method when there is no active connection is a no-op.
      *
      * @throws DirectoryException an error while accessing the directory
      */
