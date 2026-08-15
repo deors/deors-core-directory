@@ -15,7 +15,7 @@ import com.novell.ldap.LDAPSearchResults;
  * @author deors
  * @version 1.0
  */
-public class DirectoryManager {
+public class DirectoryManager implements AutoCloseable {
 
     /**
      * Flag that is <code>true</code> when there is an active directory connection.
@@ -40,33 +40,6 @@ public class DirectoryManager {
      * Constant for an inactive connection.
      */
     public static final boolean CONNECTION_INACTIVE = false;
-
-    /**
-     * The finalizer guardian.
-     */
-    protected final Object finalizerGuardian = new Object() {
-
-        /**
-         * Finalizes the object by closing the current connection if it is opened.
-         *
-         * @throws java.lang.Throwable a throwable object
-         *
-         * @see java.lang.Object#finalize()
-         */
-        protected void finalize()
-            // CHECKSTYLE:OFF
-            throws java.lang.Throwable {
-            // CHECKSTYLE:ON
-
-            try {
-                if (isConnected()) {
-                    closeConnection();
-                }
-            } finally {
-                super.finalize();
-            }
-        }
-    };
 
     /**
      * Default constructor.
@@ -113,6 +86,20 @@ public class DirectoryManager {
         }
 
         connected = false;
+    }
+
+    /**
+     * Closes the current directory connection when one is active.
+     *
+     * @throws DirectoryException an error while accessing the directory
+     */
+    @Override
+    public void close()
+        throws DirectoryException {
+
+        if (connected) {
+            closeConnection();
+        }
     }
 
     /**
