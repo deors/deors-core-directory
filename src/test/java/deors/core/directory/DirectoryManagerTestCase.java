@@ -1,6 +1,7 @@
 package deors.core.directory;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockConstruction;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -152,6 +154,28 @@ public class DirectoryManagerTestCase {
             dm.closeConnection();
 
             assertFalse(dm.isConnected());
+        }
+    }
+
+    @Test
+    public void testCloseNoOpWhenNotConnected() {
+
+        DirectoryManager dm = new DirectoryManager();
+        assertDoesNotThrow(dm::close);
+        assertFalse(dm.isConnected());
+        assertNull(dm.getConnection());
+    }
+
+    @Test
+    public void testTryWithResourcesClosesConnection() throws DirectoryException, LDAPException {
+
+        try (MockedConstruction<LDAPConnection> mocked = mockConstruction(LDAPConnection.class)) {
+
+            try (DirectoryManager dm = new DirectoryManager("localhost", 2000)) {
+                assertTrue(dm.isConnected());
+            }
+
+            verify(mocked.constructed().get(0)).disconnect();
         }
     }
 
